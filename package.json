@@ -1,6 +1,6 @@
 {
   "name": "@mihanizm56/react-final-form-utils",
-  "version": "0.0.2",
+  "version": "0.0.3-beta.1",
   "description": "form utils module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -39,7 +39,7 @@
     "@types/reselect": "2.2.0",
     "@typescript-eslint/eslint-plugin": "2.5.0",
     "@typescript-eslint/parser": "2.5.0",
-    "commitizen": "4.0.4",
+    "commitizen": "^4.2.1",
     "cross-env": "7.0.2",
     "cz-customizable": "6.2.0",
     "eslint": "6.6.0",
