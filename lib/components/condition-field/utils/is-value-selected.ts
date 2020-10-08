@@ -1,12 +1,15 @@
 type PropsType = {
-  value: any;
-  is: any;
+  fieldValue: any;
+  selectedValue: any;
 };
 
-export const isValueSelected = ({ value, is }: PropsType): boolean => {
-  if (Array.isArray(is)) {
-    return Boolean(is.find(item => item === value));
+export const isValueSelected = ({
+  fieldValue,
+  selectedValue,
+}: PropsType): boolean => {
+  if (Array.isArray(selectedValue)) {
+    return Boolean(selectedValue.find(item => item === fieldValue));
   }
 
-  return is === value;
+  return selectedValue === fieldValue;
 };
