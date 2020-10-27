@@ -2,7 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Field } from 'react-final-form';
 
 type ChangeFieldHandlerPropsType = {
-  children: ({ value, name }: { value: any; name: string }) => void;
+  children: ({
+    value,
+    name,
+    prevValue,
+  }: {
+    value: any;
+    name: string;
+    prevValue: string;
+  }) => void;
   name: string;
 };
 
