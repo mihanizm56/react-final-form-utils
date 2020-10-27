@@ -9,7 +9,15 @@ type ChangeFieldHandlerPropsType = {
 type HookPropsType = {
   name: string;
   formValue: any;
-  callback: ({ value, name }: { value: any; name: string }) => void;
+  callback: ({
+    value,
+    name,
+    prevValue,
+  }: {
+    value: any;
+    name: string;
+    prevValue: any;
+  }) => void;
 };
 
 const InternalHook = ({ formValue, callback, name }: HookPropsType) => {
@@ -21,6 +29,7 @@ const InternalHook = ({ formValue, callback, name }: HookPropsType) => {
       callback({
         name,
         value: formValue,
+        prevValue: value,
       });
     }
   }, [callback, formValue, name, value]);
