@@ -22,4 +22,8 @@
   &--enter {
     animation: fadeIn 300ms forwards;
   }
+
+  &--exit {
+    animation: fadeOut 300ms forwards;
+  }
 }

@@ -35,6 +35,7 @@ export const ConditionField = ({
           <CSSTransition
             classNames={{
               enter: cn(`${BLOCK_NAME}--enter`),
+              exit: cn(`${BLOCK_NAME}--exit`),
             }}
             in={isSelected}
             timeout={TIMEOUT_OPEN}
