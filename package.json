@@ -1,6 +1,6 @@
 {
   "name": "@mihanizm56/react-final-form-utils",
-  "version": "0.0.5-beta.3",
+  "version": "0.0.5-beta.4",
   "description": "form utils module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,7 +12,6 @@
     "compile": "rm -fr ./dist && tsc --project tsconfig.json",
     "lint": "npx eslint . --ext .ts,.tsx --fix",
     "commit": "git add . && git commit --no-edit",
-    "packages-vulnerability-check": "check-audit",
     "release": "npm run commit && git push && npm publish --access=public",
     "beta": "npm run commit && git push && npm publish --tag beta --access=public",
     "size": "pkgfiles",
@@ -78,6 +77,14 @@
     },
     "cz-customizable": {
       "config": "config/git/commitizen.js"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS -g config/git/commitlint.js",
+      "pre-commit": "npm run lint && git add . && npm run build",
+      "pre-push": "npm run size",
+      "prepare-commit-msg": "node ./config/git/prepare-commit.js"
     }
   }
 }
