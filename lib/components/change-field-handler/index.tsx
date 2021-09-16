@@ -1,31 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Field } from 'react-final-form';
 
+export type ChangeFieldHandlerParamsType = {
+  value: any;
+  name: string;
+  prevValue: any;
+};
+
 type ChangeFieldHandlerPropsType = {
-  children: ({
-    value,
-    name,
-    prevValue,
-  }: {
-    value: any;
-    name: string;
-    prevValue: string;
-  }) => void;
+  children: ({ value, name, prevValue }: ChangeFieldHandlerParamsType) => void;
   name: string;
 };
 
 type HookPropsType = {
   name: string;
   formValue: any;
-  callback: ({
-    value,
-    name,
-    prevValue,
-  }: {
-    value: any;
-    name: string;
-    prevValue: any;
-  }) => void;
+  callback: ({ value, name, prevValue }: ChangeFieldHandlerParamsType) => void;
 };
 
 const InternalHook = ({ formValue, callback, name }: HookPropsType) => {
