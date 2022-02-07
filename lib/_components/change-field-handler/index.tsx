@@ -5,6 +5,7 @@ export type ChangeFieldHandlerParamsType = {
   value: any;
   name: string;
   prevValue: any;
+  error?: any;
 };
 
 type ChangeFieldHandlerPropsType = {
@@ -16,9 +17,10 @@ type HookPropsType = {
   name: string;
   formValue: any;
   callback: ({ value, name, prevValue }: ChangeFieldHandlerParamsType) => void;
+  error?: any;
 };
 
-const InternalHook = ({ formValue, callback, name }: HookPropsType) => {
+const InternalHook = ({ formValue, callback, name, error }: HookPropsType) => {
   const [value, setValue] = useState(null);
 
   useEffect(() => {
@@ -28,9 +30,10 @@ const InternalHook = ({ formValue, callback, name }: HookPropsType) => {
         name,
         value: formValue,
         prevValue: value,
+        error,
       });
     }
-  }, [callback, formValue, name, value]);
+  }, [callback, formValue, name, value, error]);
 
   return null;
 };
@@ -39,9 +42,14 @@ export const ChangeFieldHandler = ({
   name,
   children,
 }: ChangeFieldHandlerPropsType) => (
-  <Field name={name} subscription={{ value: true }}>
-    {({ input: { value } }) => (
-      <InternalHook callback={children} formValue={value} name={name} />
+  <Field name={name} subscription={{ value: true, error: true }}>
+    {({ input: { value }, meta: { error } }) => (
+      <InternalHook
+        callback={children}
+        error={error}
+        formValue={value}
+        name={name}
+      />
     )}
   </Field>
 );
