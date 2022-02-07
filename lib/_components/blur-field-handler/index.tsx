@@ -8,6 +8,7 @@ export type BlurFieldHandlerParamsType = {
   value: any;
   name: string;
   errors: Record<string, any>;
+  formValues: Record<string, any>;
 };
 
 type WrappedComponentPropsType = BlurFieldHandlerPropsType &
@@ -27,28 +28,22 @@ class WrappedComponent extends Component<WrappedComponentPropsType> {
   }
 
   save = async (fieldName: string) => {
-    const value = this.props.values[fieldName];
+    const { values: formValues, errors } = this.props;
 
     this.props.handleBlur({
       name: fieldName,
-      value,
-      errors: this.props.errors,
+      value: formValues[fieldName],
+      errors,
+      formValues,
     });
   };
 
   render() {
-    // This component doesn't have to render anything, but it can render
-    // submitting state.
+    // This component doesn't have to render anything.
     return null;
   }
 }
 
-// Make a HOC
-// This is not the only way to accomplish auto-save, but it does let us:
-// - Use built-in React lifecycle methods to listen for changes
-// - Maintain state of when we are submitting
-// - Render a message when submitting
-// - Pass in save prop nicely
 export const BlurFieldHandler = (props: BlurFieldHandlerPropsType) => {
   return (
     <FormSpy
