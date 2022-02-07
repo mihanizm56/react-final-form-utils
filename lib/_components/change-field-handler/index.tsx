@@ -41,7 +41,7 @@ export const ChangeFieldHandler = ({
 }: ChangeFieldHandlerPropsType) => (
   <Field name={name} subscription={{ value: true }}>
     {({ input: { value } }) => (
-      <InternalHook formValue={value} callback={children} name={name} />
+      <InternalHook callback={children} formValue={value} name={name} />
     )}
   </Field>
 );

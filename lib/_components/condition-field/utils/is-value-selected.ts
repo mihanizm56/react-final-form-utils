@@ -8,7 +8,7 @@ export const isValueSelected = ({
   selectedValue,
 }: PropsType): boolean => {
   if (Array.isArray(selectedValue)) {
-    return Boolean(selectedValue.find(item => item === fieldValue));
+    return Boolean(selectedValue.find((item) => item === fieldValue));
   }
 
   return selectedValue === fieldValue;

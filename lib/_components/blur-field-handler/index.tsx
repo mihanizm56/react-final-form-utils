@@ -7,6 +7,7 @@ import { FormSpy, FormSpyRenderProps } from 'react-final-form';
 export type BlurFieldHandlerParamsType = {
   value: any;
   name: string;
+  errors: Record<string, any>;
 };
 
 type WrappedComponentPropsType = BlurFieldHandlerPropsType &
@@ -17,6 +18,7 @@ type BlurFieldHandlerPropsType = {
 };
 
 class WrappedComponent extends Component<WrappedComponentPropsType> {
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(nextProps: any) {
     if (this.props.active && this.props.active !== nextProps.active) {
       // blur occurred
@@ -27,7 +29,11 @@ class WrappedComponent extends Component<WrappedComponentPropsType> {
   save = async (fieldName: string) => {
     const value = this.props.values[fieldName];
 
-    this.props.handleBlur({ name: fieldName, value });
+    this.props.handleBlur({
+      name: fieldName,
+      value,
+      errors: this.props.errors,
+    });
   };
 
   render() {
@@ -48,13 +54,13 @@ export const BlurFieldHandler = (props: BlurFieldHandlerPropsType) => {
     <FormSpy
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
-      subscription={{ active: true, values: true }}
-      component={componentProps => {
+      component={(componentProps) => {
         return (
           // eslint-disable-next-line react/jsx-props-no-spreading
           <WrappedComponent {...componentProps} handleBlur={props.handleBlur} />
         );
       }}
+      subscription={{ active: true, values: true, errors: true }}
     />
   );
 };
