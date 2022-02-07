@@ -1,5 +1,9 @@
 export {
   ChangeFieldHandler,
   ChangeFieldHandlerParamsType,
-} from './components/change-field-handler';
+} from './_components/change-field-handler';
 // export { ConditionField } from './components/condition-field';
+export {
+  BlurFieldHandler,
+  BlurFieldHandlerParamsType,
+} from './_components/blur-field-handler';
