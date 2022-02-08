@@ -7,3 +7,8 @@ export {
   BlurFieldHandler,
   BlurFieldHandlerParamsType,
 } from './_components/blur-field-handler';
+
+export {
+  ChangeFieldHandlerAllFields,
+  ChangeFieldHandlerAllFieldsParamsType,
+} from './_components/change-field-handler-all-fields';

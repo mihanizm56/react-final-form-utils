@@ -1,4 +1,4 @@
-import { AnyObject } from 'final-form';
+import { AnyObject, FormApi } from 'final-form';
 import React, { Component } from 'react';
 import { FormSpy, FormSpyRenderProps } from 'react-final-form';
 
@@ -9,6 +9,7 @@ export type BlurFieldHandlerParamsType = {
   name: string;
   errors: Record<string, any>;
   formValues: Record<string, any>;
+  form?: FormApi<Record<string, any>>;
 };
 
 type WrappedComponentPropsType = BlurFieldHandlerPropsType &
@@ -16,6 +17,7 @@ type WrappedComponentPropsType = BlurFieldHandlerPropsType &
 
 type BlurFieldHandlerPropsType = {
   handleBlur: (params: BlurFieldHandlerParamsType) => void;
+  form?: FormApi<Record<string, any>>;
 };
 
 class WrappedComponent extends Component<WrappedComponentPropsType> {
@@ -28,13 +30,14 @@ class WrappedComponent extends Component<WrappedComponentPropsType> {
   }
 
   save = async (fieldName: string) => {
-    const { values: formValues, errors } = this.props;
+    const { values: formValues, errors, form } = this.props;
 
     this.props.handleBlur({
       name: fieldName,
       value: formValues[fieldName],
       errors,
       formValues,
+      form,
     });
   };
 
