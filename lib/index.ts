@@ -11,4 +11,5 @@ export {
 export {
   ChangeFieldHandlerAllFields,
   ChangeFieldHandlerAllFieldsParamsType,
+  getChangedObjectField,
 } from './_components/change-field-handler-all-fields';

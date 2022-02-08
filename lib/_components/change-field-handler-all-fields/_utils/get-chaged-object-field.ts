@@ -1,3 +1,5 @@
+import isEqual from 'deep-equal';
+
 type ParamsType = {
   prevValues: Record<string, any>;
   values: Record<string, any>;
@@ -5,7 +7,7 @@ type ParamsType = {
 
 type OutputType = { name: string; value: any; prevValue: any };
 
-export const getChangedField = ({
+export const getChangedObjectField = ({
   prevValues,
   values,
 }: ParamsType): OutputType => {
@@ -18,7 +20,7 @@ export const getChangedField = ({
       const prevValue = prevValues[valueKey];
       const value = values[valueKey];
 
-      if (value !== prevValue) {
+      if (!isEqual(value, prevValue)) {
         return {
           name: valueKey,
           value,

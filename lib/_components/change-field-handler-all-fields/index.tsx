@@ -1,7 +1,9 @@
 import { FormApi } from 'final-form';
 import React, { useState, useEffect } from 'react';
 import { FormSpy } from 'react-final-form';
-import { getChangedField } from './_utils/get-cahged-field';
+import { getChangedObjectField } from './_utils/get-chaged-object-field';
+
+export { getChangedObjectField } from './_utils/get-chaged-object-field';
 
 export type ChangeFieldHandlerAllFieldsParamsType = {
   value: any;
@@ -31,7 +33,10 @@ const InternalHook = ({ values, callback, errors, form }: HookPropsType) => {
   const [prevValues, setPrevValues] = useState<Record<string, any>>({});
 
   useEffect(() => {
-    const { name, value, prevValue } = getChangedField({ prevValues, values });
+    const { name, value, prevValue } = getChangedObjectField({
+      prevValues,
+      values,
+    });
 
     if (name) {
       setPrevValues(values);
