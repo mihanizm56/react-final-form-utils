@@ -1,13 +1,10 @@
 import { FormApi } from 'final-form';
 import React, { useState, useEffect } from 'react';
 import { Field } from 'react-final-form';
+import { BaseHandlerParamsType } from '@/_types';
 
-export type ChangeFieldHandlerParamsType = {
-  value: any;
-  name: string;
+export type ChangeFieldHandlerParamsType = BaseHandlerParamsType & {
   prevValue: any;
-  error?: any;
-  form?: FormApi<Record<string, any>>;
 };
 
 type ChangeFieldHandlerPropsType = {

@@ -1,18 +1,16 @@
 import { FormApi } from 'final-form';
 import React, { useState, useEffect } from 'react';
 import { FormSpy } from 'react-final-form';
+import { BaseHandlerParamsType } from '@/_types';
 import { getChangedObjectField } from './_utils/get-chaged-object-field';
 
 export { getChangedObjectField } from './_utils/get-chaged-object-field';
 
-export type ChangeFieldHandlerAllFieldsParamsType = {
-  value: any;
-  name: string;
+export type ChangeFieldHandlerAllFieldsParamsType = BaseHandlerParamsType & {
   prevValue: any;
   errors?: Record<string, any>;
-  form?: FormApi<Record<string, any>>;
+  formValues: Record<string, any>;
 };
-
 type ChangeFieldHandlerPropsType = {
   onChange: ({
     value,
@@ -23,7 +21,7 @@ type ChangeFieldHandlerPropsType = {
 };
 
 type HookPropsType = {
-  callback: ({ value, name }: ChangeFieldHandlerAllFieldsParamsType) => void;
+  callback: (params: ChangeFieldHandlerAllFieldsParamsType) => void;
   errors?: Record<string, any>;
   values: Record<string, any>;
   form?: FormApi<Record<string, any>>;
@@ -46,7 +44,9 @@ const InternalHook = ({ values, callback, errors, form }: HookPropsType) => {
         value,
         prevValue,
         errors,
+        error: errors ? errors[name] : null,
         form,
+        formValues: values,
       });
     }
   }, [callback, errors, prevValues, values, form]);

@@ -1,15 +1,15 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { AnyObject, FormApi } from 'final-form';
 import React, { Component } from 'react';
 import { FormSpy, FormSpyRenderProps } from 'react-final-form';
+import { BaseHandlerParamsType } from '@/_types';
 
+// taken from
 // https://codesandbox.io/s/react-final-form-auto-save-on-field-blur-forked-5p6u8?file=/AutoSave.js:0-1592
 
-export type BlurFieldHandlerParamsType = {
-  value: any;
-  name: string;
+export type BlurFieldHandlerParamsType = BaseHandlerParamsType & {
   errors: Record<string, any>;
   formValues: Record<string, any>;
-  form?: FormApi<Record<string, any>>;
 };
 
 type WrappedComponentPropsType = BlurFieldHandlerPropsType &
@@ -24,25 +24,24 @@ class WrappedComponent extends Component<WrappedComponentPropsType> {
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(nextProps: any) {
     if (this.props.active && this.props.active !== nextProps.active) {
-      // blur occurred
-      this.save(this.props.active);
+      this.onBlurField(this.props.active);
     }
   }
 
-  save = async (fieldName: string) => {
-    const { values: formValues, errors, form } = this.props;
+  onBlurField = async (fieldName: string) => {
+    const { values: formValues, errors } = this.props;
 
     this.props.handleBlur({
       name: fieldName,
       value: formValues[fieldName],
+      error: errors ? errors[fieldName] : null,
       errors,
       formValues,
-      form,
+      form: this.props.form,
     });
   };
 
   render() {
-    // This component doesn't have to render anything.
     return null;
   }
 }
@@ -50,11 +49,9 @@ class WrappedComponent extends Component<WrappedComponentPropsType> {
 export const BlurFieldHandler = (props: BlurFieldHandlerPropsType) => {
   return (
     <FormSpy
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
       component={(componentProps) => {
         return (
-          // eslint-disable-next-line react/jsx-props-no-spreading
           <WrappedComponent {...componentProps} handleBlur={props.handleBlur} />
         );
       }}

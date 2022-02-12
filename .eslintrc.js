@@ -176,4 +176,12 @@ module.exports = {
     // @wildberries-codestyle
     // "wildberries-seller-codestyle/redux-modules": "error"
   },
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [['@', './lib']],
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+      },
+    },
+  },
 };
