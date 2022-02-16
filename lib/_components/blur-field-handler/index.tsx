@@ -18,6 +18,7 @@ type WrappedComponentPropsType = BlurFieldHandlerPropsType &
 type BlurFieldHandlerPropsType = {
   handleBlur: (params: BlurFieldHandlerParamsType) => void;
   form?: FormApi<Record<string, any>>;
+  disabled?: boolean;
 };
 
 class WrappedComponent extends Component<WrappedComponentPropsType> {
@@ -31,14 +32,16 @@ class WrappedComponent extends Component<WrappedComponentPropsType> {
   onBlurField = async (fieldName: string) => {
     const { values: formValues, errors } = this.props;
 
-    this.props.handleBlur({
-      name: fieldName,
-      value: formValues[fieldName],
-      error: errors ? errors[fieldName] : null,
-      errors,
-      formValues,
-      form: this.props.form,
-    });
+    if (!this.props.disabled) {
+      this.props.handleBlur({
+        name: fieldName,
+        value: formValues[fieldName],
+        error: errors ? errors[fieldName] : null,
+        errors,
+        formValues,
+        form: this.props.form,
+      });
+    }
   };
 
   render() {
@@ -52,7 +55,11 @@ export const BlurFieldHandler = (props: BlurFieldHandlerPropsType) => {
       {...props}
       component={(componentProps) => {
         return (
-          <WrappedComponent {...componentProps} handleBlur={props.handleBlur} />
+          <WrappedComponent
+            {...componentProps}
+            disabled={props.disabled}
+            handleBlur={props.handleBlur}
+          />
         );
       }}
       subscription={{ active: true, values: true, errors: true }}

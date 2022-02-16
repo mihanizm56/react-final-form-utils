@@ -11,6 +11,7 @@ type ChangeFieldHandlerPropsType = {
   children: (params: ChangeFieldHandlerParamsType) => void;
   name: string;
   form?: FormApi<Record<string, any>>;
+  disabled?: boolean;
 };
 
 type HookPropsType = {
@@ -19,6 +20,7 @@ type HookPropsType = {
   callback: (params: ChangeFieldHandlerParamsType) => void;
   error?: any;
   form?: FormApi<Record<string, any>>;
+  disabled?: boolean;
 };
 
 const InternalHook = ({
@@ -27,6 +29,7 @@ const InternalHook = ({
   name,
   error,
   form,
+  disabled,
 }: HookPropsType) => {
   const [value, setValue] = useState(null);
 
@@ -34,15 +37,17 @@ const InternalHook = ({
     if (value !== formValue) {
       setValue(formValue);
 
-      callback({
-        name,
-        value: formValue,
-        prevValue: value,
-        error,
-        form,
-      });
+      if (!disabled) {
+        callback({
+          name,
+          value: formValue,
+          prevValue: value,
+          error,
+          form,
+        });
+      }
     }
-  }, [callback, formValue, name, value, error, form]);
+  }, [callback, formValue, name, value, error, form, disabled]);
 
   return null;
 };
@@ -51,6 +56,7 @@ export const ChangeFieldHandler = ({
   name,
   children,
   form,
+  disabled,
 }: ChangeFieldHandlerPropsType) => (
   <Field name={name} subscription={{ value: true, error: true }}>
     {({ input: { value }, meta: { error } }) => (
