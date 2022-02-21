@@ -10,7 +10,7 @@ export type ChangeFieldHandlerParamsType = BaseHandlerParamsType & {
 type ChangeFieldHandlerPropsType = {
   children: (params: ChangeFieldHandlerParamsType) => void;
   name: string;
-  form?: FormApi<Record<string, any>>;
+  form?: FormApi<any>;
   disabled?: boolean;
 };
 
@@ -19,7 +19,7 @@ type HookPropsType = {
   formValue: any;
   callback: (params: ChangeFieldHandlerParamsType) => void;
   error?: any;
-  form?: FormApi<Record<string, any>>;
+  form?: FormApi<any>;
   disabled?: boolean;
 };
 

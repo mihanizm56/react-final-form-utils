@@ -17,7 +17,7 @@ type WrappedComponentPropsType = BlurFieldHandlerPropsType &
 
 type BlurFieldHandlerPropsType = {
   handleBlur: (params: BlurFieldHandlerParamsType) => void;
-  form?: FormApi<Record<string, any>>;
+  form?: FormApi<any>;
   disabled?: boolean;
 };
 

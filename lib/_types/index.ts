@@ -3,6 +3,6 @@ import { FormApi } from 'final-form';
 export type BaseHandlerParamsType = {
   value: any;
   name: string;
-  form?: FormApi<Record<string, any>>;
+  form?: FormApi<any>;
   error?: any;
 };

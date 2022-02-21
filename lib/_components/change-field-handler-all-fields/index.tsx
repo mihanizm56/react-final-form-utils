@@ -17,7 +17,7 @@ type ChangeFieldHandlerPropsType = {
     name,
     prevValue,
   }: ChangeFieldHandlerAllFieldsParamsType) => void;
-  form?: FormApi<Record<string, any>>;
+  form?: FormApi<any>;
   disabled?: boolean;
 };
 
@@ -25,7 +25,7 @@ type HookPropsType = {
   callback: (params: ChangeFieldHandlerAllFieldsParamsType) => void;
   errors?: Record<string, any>;
   values: Record<string, any>;
-  form?: FormApi<Record<string, any>>;
+  form?: FormApi<any>;
   disabled?: boolean;
 };
 
