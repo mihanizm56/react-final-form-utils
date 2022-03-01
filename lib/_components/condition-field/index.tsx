@@ -1,36 +1,33 @@
 import React, { memo, PropsWithChildren } from 'react';
 import { Field } from 'react-final-form';
-import { FormApi } from 'final-form';
-import { isValueSelected } from './utils/is-value-selected';
+
+export type CustomConditionParamsType = { value: any; name: string };
+export type CustomConditionType = ({
+  value,
+  name,
+}: CustomConditionParamsType) => boolean;
 
 type PropsType = PropsWithChildren<{
   fieldNameToTrack: string;
-  fieldName: string;
-  fieldValue?: any;
-  customCondition?: ({ value, name }: { value: any; name: string }) => boolean;
-  form: FormApi<any>;
+  customCondition?: CustomConditionType;
+  hidden?: boolean;
 }>;
 
 export const ConditionField = memo(
-  ({
-    fieldValue,
-    fieldName,
-    children,
-    customCondition,
-    form,
-    fieldNameToTrack,
-  }: PropsType) => (
+  ({ children, customCondition, fieldNameToTrack, hidden }: PropsType) => (
     <Field name={fieldNameToTrack} subscription={{ value: true }}>
       {({ input: { value } }) => {
-        const isSelected = customCondition
-          ? customCondition({ value, name: fieldNameToTrack })
-          : isValueSelected({ selectedValue: fieldValue, fieldValue: value });
+        if (hidden) {
+          return null;
+        }
 
-        // if (!isSelected) {
-        //   form.change(fieldName, undefined);
-        // }
+        if (customCondition) {
+          const isShown = customCondition({ value, name: fieldNameToTrack });
 
-        return isSelected ? children : null;
+          return isShown ? children : null;
+        }
+
+        return children;
       }}
     </Field>
   ),

@@ -15,3 +15,8 @@ export {
 } from './_components/change-field-handler-all-fields';
 
 export { BaseHandlerParamsType } from './_types';
+
+export {
+  CustomConditionParamsType,
+  ConditionField,
+} from './_components/condition-field';
