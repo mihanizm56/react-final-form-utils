@@ -1,6 +1,6 @@
 {
   "name": "@mihanizm56/react-final-form-utils",
-  "version": "0.0.7-beta.11",
+  "version": "0.0.7-beta.12",
   "description": "form utils module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -91,7 +91,6 @@
     }
   },
   "dependencies": {
-    "deep-equal": "2.0.5",
-    "object-diff": "0.0.4"
+    "deep-equal": "2.0.5"
   }
 }
