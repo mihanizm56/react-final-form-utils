@@ -2,9 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { FormApi } from 'final-form';
 import { FormSpy } from 'react-final-form';
 import { BaseHandlerParamsType } from '@/_types';
-import { getChangedObjectField } from './_utils/get-chaged-object-field';
+import {
+  getChangedObjectField,
+  GetCompareFieldType,
+} from './_utils/get-chaged-object-field';
 
-export { getChangedObjectField } from './_utils/get-chaged-object-field';
+export {
+  getChangedObjectField,
+  GetCompareFieldType,
+} from './_utils/get-chaged-object-field';
 
 export type ChangeFieldHandlerAllFieldsParamsType = BaseHandlerParamsType & {
   prevValue: any;
@@ -19,6 +25,7 @@ type ChangeFieldHandlerPropsType = {
   }: ChangeFieldHandlerAllFieldsParamsType) => void;
   form?: FormApi<any>;
   disabled?: boolean;
+  customCompareFunction?: GetCompareFieldType;
 };
 
 type HookPropsType = {
@@ -27,6 +34,7 @@ type HookPropsType = {
   values: Record<string, any>;
   form?: FormApi<any>;
   disabled?: boolean;
+  customCompareFunction?: GetCompareFieldType;
 };
 
 const InternalHook = ({
@@ -35,14 +43,20 @@ const InternalHook = ({
   errors,
   form,
   disabled,
+  customCompareFunction,
 }: HookPropsType) => {
   const [prevValues, setPrevValues] = useState<Record<string, any>>({});
 
   useEffect(() => {
-    const { name, value, prevValue } = getChangedObjectField({
-      prevValues,
-      values,
-    });
+    const { name, value, prevValue } = customCompareFunction
+      ? customCompareFunction({
+          prevValues,
+          values,
+        })
+      : getChangedObjectField({
+          prevValues,
+          values,
+        });
 
     if (name) {
       setPrevValues(values);
@@ -59,7 +73,15 @@ const InternalHook = ({
         });
       }
     }
-  }, [callback, errors, prevValues, values, form, disabled]);
+  }, [
+    callback,
+    errors,
+    prevValues,
+    values,
+    form,
+    disabled,
+    customCompareFunction,
+  ]);
 
   return null;
 };
@@ -68,11 +90,13 @@ export const ChangeFieldHandlerAllFields = ({
   onChange,
   form,
   disabled,
+  customCompareFunction,
 }: ChangeFieldHandlerPropsType) => (
   <FormSpy subscription={{ values: true, errors: true }}>
     {({ values, errors }) => (
       <InternalHook
         callback={onChange}
+        customCompareFunction={customCompareFunction}
         disabled={disabled}
         errors={errors}
         form={form}

@@ -7,10 +7,12 @@ type ParamsType = {
 
 type OutputType = { name: string; value: any; prevValue: any };
 
-export const getChangedObjectField = ({
+export type GetCompareFieldType = (params: ParamsType) => OutputType;
+
+export const getChangedObjectField: GetCompareFieldType = ({
   prevValues,
   values,
-}: ParamsType): OutputType => {
+}) => {
   return Object.keys(values).reduce(
     (acc: OutputType, valueKey): OutputType => {
       if (Boolean(acc.name)) {

@@ -12,6 +12,7 @@ export {
   ChangeFieldHandlerAllFields,
   ChangeFieldHandlerAllFieldsParamsType,
   getChangedObjectField,
+  GetCompareFieldType,
 } from './_components/change-field-handler-all-fields';
 
 export { BaseHandlerParamsType } from './_types';
