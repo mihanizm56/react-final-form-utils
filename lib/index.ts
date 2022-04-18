@@ -21,3 +21,8 @@ export {
   CustomConditionParamsType,
   ConditionField,
 } from './_components/condition-field';
+
+export {
+  ScrollToErrorOnFieldParamsType,
+  scrollToErrorOnField,
+} from './_utils/errors-field-scroll';
