@@ -25,6 +25,8 @@ class WrappedComponent extends Component<WrappedComponentPropsType> {
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(nextProps: any) {
     if (this.props.active && this.props.active !== nextProps.active) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       this.onBlurField(this.props.active);
     }
   }
@@ -37,6 +39,8 @@ class WrappedComponent extends Component<WrappedComponentPropsType> {
         name: fieldName,
         value: formValues[fieldName],
         error: errors ? errors[fieldName] : null,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         errors,
         formValues,
         form: this.props.form,

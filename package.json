@@ -1,6 +1,6 @@
 {
   "name": "@mihanizm56/react-final-form-utils",
-  "version": "0.0.7-beta.14",
+  "version": "0.0.7-beta.15",
   "description": "form utils module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -27,9 +27,12 @@
   "bugs": {
     "url": "https://github.com/mihanizm56/notifications/issues"
   },
+  "dependencies": {
+    "deep-equal": "2.0.5"
+  },
   "peerDependencies": {
-    "final-form": "4.18.6",
-    "react-final-form": "6.3.3",
+    "final-form": "4.20.6",
+    "react-final-form": "6.5.8",
     "react": "16.14.0"
   },
   "devDependencies": {
@@ -59,14 +62,14 @@
     "eslint-plugin-react-hooks": "4.3.0",
     "eslint-plugin-security": "1.4.0",
     "eslint-plugin-unused-imports": "2.0.0",
-    "final-form": "4.19.1",
+    "final-form": "4.20.6",
     "glob": "7.1.6",
     "husky": "3.0.9",
     "jest": "25.1.0",
     "npm-audit-resolver": "2.1.0",
     "prettier": "2.4.1",
     "react": "16.14.0",
-    "react-final-form": "6.3.3",
+    "react-final-form": "6.5.8",
     "rimraf": "3.0.2",
     "ts-jest": "25.4.0",
     "tscpaths": "0.0.9",
@@ -89,8 +92,5 @@
       "pre-commit": "npm run lint && git add . && npm run build",
       "prepare-commit-msg": "node ./config/git/prepare-commit.js"
     }
-  },
-  "dependencies": {
-    "deep-equal": "2.0.5"
   }
 }
