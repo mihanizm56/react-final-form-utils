@@ -25,4 +25,5 @@ export {
 export {
   ScrollToErrorOnFieldParamsType,
   scrollToErrorOnField,
+  ICustomCheckIsErrorField,
 } from './_utils/errors-field-scroll';

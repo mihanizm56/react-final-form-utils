@@ -1,15 +1,22 @@
 // https://erikras.com/blog/focus-on-errors
 
+export type ICustomCheckIsErrorField = (params: {
+  name: string;
+  formErrors: Record<string, string>;
+}) => boolean;
+
 export type ScrollToErrorOnFieldParamsType = {
   formErrors: Record<string, string>;
   fieldNameFormatter?: (fieldName: string) => string;
   timeoutToScroll?: number;
+  customCheckIsErrorField?: ICustomCheckIsErrorField;
 };
 
 export const scrollToErrorOnField = ({
   formErrors,
   fieldNameFormatter,
   timeoutToScroll = 100,
+  customCheckIsErrorField,
 }: ScrollToErrorOnFieldParamsType) => {
   const form = Array.from(document.forms[0]);
 
@@ -18,7 +25,12 @@ export const scrollToErrorOnField = ({
   const firstErrorFieldElement = form.find(({ name }) => {
     const fieldName = fieldNameFormatter?.(name) ?? name;
 
-    return fieldName in formErrors;
+    return (
+      customCheckIsErrorField?.({
+        name,
+        formErrors,
+      }) ?? Boolean(formErrors[fieldName])
+    );
   }) as HTMLElement;
 
   if (firstErrorFieldElement) {
