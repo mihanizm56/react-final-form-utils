@@ -44,3 +44,11 @@ export const scrollToErrorOnField = ({
     }, timeoutToScroll);
   }
 };
+
+export const createScrollToErrorOnField =
+  (params: Omit<ScrollToErrorOnFieldParamsType, 'formErrors'>) =>
+  ({ formErrors }: { formErrors: Record<string, string> }) =>
+    scrollToErrorOnField({
+      ...params,
+      formErrors,
+    });
