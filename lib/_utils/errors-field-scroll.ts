@@ -18,30 +18,41 @@ export const scrollToErrorOnField = ({
   timeoutToScroll = 100,
   customCheckIsErrorField,
 }: ScrollToErrorOnFieldParamsType) => {
-  const form = Array.from(document.forms[0]);
+  if (!formErrors) {
+    // eslint-disable-next-line no-console
+    console.warn('formErrors in scrollToErrorOnField is empty!');
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const firstErrorFieldElement = form.find(({ name }) => {
-    const fieldName = fieldNameFormatter?.(name) ?? name;
+    return;
+  }
 
-    return (
-      customCheckIsErrorField?.({
-        name,
-        formErrors,
-      }) ?? Boolean(formErrors[fieldName])
-    );
-  }) as HTMLElement;
+  try {
+    const form = Array.from(document.forms[0]);
 
-  if (firstErrorFieldElement) {
-    setTimeout(() => {
-      firstErrorFieldElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const firstErrorFieldElement = form.find(({ name }) => {
+      const fieldName = fieldNameFormatter?.(name) ?? name;
 
-      firstErrorFieldElement.focus({ preventScroll: true });
-    }, timeoutToScroll);
+      return (
+        customCheckIsErrorField?.({
+          name,
+          formErrors,
+        }) ?? Boolean(formErrors[fieldName])
+      );
+    }) as HTMLElement;
+
+    if (firstErrorFieldElement) {
+      setTimeout(() => {
+        firstErrorFieldElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+
+        firstErrorFieldElement.focus({ preventScroll: true });
+      }, timeoutToScroll);
+    }
+  } catch (error) {
+    console.error('error in scrollToErrorOnField', error);
   }
 };
 
