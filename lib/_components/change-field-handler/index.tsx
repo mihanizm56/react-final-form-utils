@@ -62,6 +62,7 @@ export const ChangeFieldHandler = ({
     {({ input: { value }, meta: { error } }) => (
       <InternalHook
         callback={children}
+        disabled={disabled}
         error={error}
         form={form}
         formValue={value}

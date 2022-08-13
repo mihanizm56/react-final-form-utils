@@ -14,17 +14,17 @@ export const getChangedObjectField: GetCompareFieldType = ({
   values,
 }) => {
   return Object.keys(values).reduce(
-    (acc: OutputType, valueKey): OutputType => {
+    (acc: OutputType, name): OutputType => {
       if (Boolean(acc.name)) {
         return acc;
       }
 
-      const prevValue = prevValues[valueKey];
-      const value = values[valueKey];
+      const prevValue = prevValues[name];
+      const value = values[name];
 
       if (!isEqual(value, prevValue)) {
         return {
-          name: valueKey,
+          name,
           value,
           prevValue,
         };
