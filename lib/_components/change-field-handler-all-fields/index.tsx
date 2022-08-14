@@ -26,6 +26,7 @@ type ChangeFieldHandlerPropsType = {
   form?: FormApi<any>;
   disabled?: boolean;
   customCompareFunction?: GetCompareFieldType;
+  withDetectClearedFields?: boolean;
 };
 
 type HookPropsType = {
@@ -35,6 +36,7 @@ type HookPropsType = {
   form?: FormApi<any>;
   disabled?: boolean;
   customCompareFunction?: GetCompareFieldType;
+  withDetectClearedFields?: boolean;
 };
 
 const InternalHook = ({
@@ -44,6 +46,7 @@ const InternalHook = ({
   form,
   disabled,
   customCompareFunction,
+  withDetectClearedFields,
 }: HookPropsType) => {
   const [prevValues, setPrevValues] = useState<Record<string, any>>({});
 
@@ -56,6 +59,7 @@ const InternalHook = ({
       : getChangedObjectField({
           prevValues,
           values,
+          withDetectClearedFields,
         });
 
     if (name) {
@@ -81,6 +85,7 @@ const InternalHook = ({
     form,
     disabled,
     customCompareFunction,
+    withDetectClearedFields,
   ]);
 
   return null;
@@ -91,6 +96,7 @@ export const ChangeFieldHandlerAllFields = ({
   form,
   disabled,
   customCompareFunction,
+  withDetectClearedFields,
 }: ChangeFieldHandlerPropsType) => (
   <FormSpy subscription={{ values: true, errors: true }}>
     {({ values, errors }) => (
@@ -101,6 +107,7 @@ export const ChangeFieldHandlerAllFields = ({
         errors={errors}
         form={form}
         values={values}
+        withDetectClearedFields={withDetectClearedFields}
       />
     )}
   </FormSpy>
