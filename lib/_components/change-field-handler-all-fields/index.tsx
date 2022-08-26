@@ -27,6 +27,8 @@ type ChangeFieldHandlerPropsType = {
   disabled?: boolean;
   customCompareFunction?: GetCompareFieldType;
   withDetectClearedFields?: boolean;
+  fieldsNotToListen?: Record<string, boolean>;
+  fieldsToListen?: Record<string, boolean>;
 };
 
 type HookPropsType = {
@@ -37,6 +39,8 @@ type HookPropsType = {
   disabled?: boolean;
   customCompareFunction?: GetCompareFieldType;
   withDetectClearedFields?: boolean;
+  fieldsNotToListen?: Record<string, boolean>;
+  fieldsToListen?: Record<string, boolean>;
 };
 
 const InternalHook = ({
@@ -47,6 +51,8 @@ const InternalHook = ({
   disabled,
   customCompareFunction,
   withDetectClearedFields,
+  fieldsNotToListen,
+  fieldsToListen,
 }: HookPropsType) => {
   const [prevValues, setPrevValues] = useState<Record<string, any>>({});
 
@@ -61,6 +67,14 @@ const InternalHook = ({
           values,
           withDetectClearedFields,
         });
+
+    if (fieldsNotToListen && fieldsNotToListen[name]) {
+      return;
+    }
+
+    if (fieldsToListen && !fieldsToListen[name]) {
+      return;
+    }
 
     if (name) {
       setPrevValues(values);
@@ -86,6 +100,8 @@ const InternalHook = ({
     disabled,
     customCompareFunction,
     withDetectClearedFields,
+    fieldsNotToListen,
+    fieldsToListen,
   ]);
 
   return null;
@@ -97,6 +113,8 @@ export const ChangeFieldHandlerAllFields = ({
   disabled,
   customCompareFunction,
   withDetectClearedFields,
+  fieldsNotToListen,
+  fieldsToListen,
 }: ChangeFieldHandlerPropsType) => (
   <FormSpy subscription={{ values: true, errors: true }}>
     {({ values, errors }) => (
@@ -105,6 +123,8 @@ export const ChangeFieldHandlerAllFields = ({
         customCompareFunction={customCompareFunction}
         disabled={disabled}
         errors={errors}
+        fieldsNotToListen={fieldsNotToListen}
+        fieldsToListen={fieldsToListen}
         form={form}
         values={values}
         withDetectClearedFields={withDetectClearedFields}
